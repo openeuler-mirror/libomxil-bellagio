@@ -1,0 +1,33 @@
+diff -urN ./src/omx_reference_resource_manager.c ./src/omx_reference_resource_manager.c
+--- ./src/omx_reference_resource_manager.c	2021-08-05 18:44:02.502180627 +0800
++++ ./src/omx_reference_resource_manager.c	2021-08-05 18:47:24.151838514 +0800
+@@ -30,6 +30,11 @@
+ #include "base/omx_base_component.h"
+ #include "queue.h"
+
++int globalIndex;
++NameIndexType *listOfcomponentRegistered;
++ComponentListType **globalComponentList;
++ComponentListType **globalWaitingComponentList;
++
+ /**
+  * This is the static base pointer of the list
+  */
+diff -urN ./src/omx_reference_resource_manager.h ./src/omx_reference_resource_manager.h
+--- ./src/omx_reference_resource_manager.h	2011-01-12 15:53:26.000000000 +0800
++++ ./src/omx_reference_resource_manager.h	2021-08-05 18:46:51.663571188 +0800
+@@ -49,10 +49,10 @@
+ };
+
+
+-int globalIndex;
+-NameIndexType *listOfcomponentRegistered;
+-ComponentListType **globalComponentList;
+-ComponentListType **globalWaitingComponentList;
++extern int globalIndex;
++extern NameIndexType *listOfcomponentRegistered;
++extern ComponentListType **globalComponentList;
++extern ComponentListType **globalWaitingComponentList;
+
+ OMX_ERRORTYPE RM_RegisterComponent(char *name, int max_components);
+ OMX_ERRORTYPE addElemToList(ComponentListType **list, OMX_COMPONENTTYPE *openmaxStandComp, int index, OMX_BOOL bIsWaiting);
