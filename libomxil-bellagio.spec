@@ -1,6 +1,6 @@
 Name:           libomxil-bellagio
 Version:        0.9.3
-Release:        21
+Release:        22
 Summary:        OpenMAX Integration Layer
 License:        LGPLv2+
 URL:            http://omxil.sourceforge.net
@@ -14,6 +14,8 @@ Patch0006:      bellagio-0.9.3-segfault-on-removeFromWaitResource.patch
 Patch0007:      omxil_version.patch
 Patch0008:      libomxil-bellagio-0.9.3-memcpy.patch
 Patch0009:      libomxil-bellagio-0.9.3-valgrind_register.patch
+Patch0010:      fix-stringop-overflow.patch
+Patch0011:      fix-multi-define.patch
 BuildRequires:  doxygen libtool gcc-c++
 
 %description
@@ -98,5 +100,8 @@ install -pm 0755 test/components/resource_manager/.libs/{omxprioritytest,omxrmte
 
 
 %changelog
+* Sat Jul 31 2021 luweitao <luweitao2@huawei.com> - 0.9.3-22
+- fix failure by upgrade to GCC-10
+
 * Tue Dec 31 2019 zoushuangshuang <zoushuangshuang@huawei.com> - 0.9.3-21
 - Package init
