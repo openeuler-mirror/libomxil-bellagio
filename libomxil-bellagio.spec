@@ -1,6 +1,6 @@
 Name:           libomxil-bellagio
 Version:        0.9.3
-Release:        22
+Release:        23
 Summary:        OpenMAX Integration Layer
 License:        LGPLv2+
 URL:            http://omxil.sourceforge.net
@@ -45,20 +45,21 @@ The libomxil-bellagio-help package contains man information for libomxil-bellagi
 
 %prep
 %autosetup -p1
-autoreconf -vif
-
 
 %build
+autoreconf -vif
 %configure --disable-static
 
 sed -i.rpath 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i.rpath 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-%make_build || %make_build
+%if "%toolchain" == "clang"
+CFLAGS="$CFLAGS -Wno-error=enum-conversion -Wno-error=unused-but-set-variable"
+%endif
 
+%make_build CFLAGS="$CFLAGS"
 ln -sf src bellagio
-make check LDFLAGS="-L$PWD/src/.libs"  CFLAGS="$RPM_OPT_FLAGS -I$PWD/include -I$PWD"
-
+make check LDFLAGS="-L$PWD/src/.libs"  CFLAGS="$CFLAGS $RPM_OPT_FLAGS -I$PWD/include -I$PWD"
 
 %install
 %make_install
@@ -100,6 +101,9 @@ install -pm 0755 test/components/resource_manager/.libs/{omxprioritytest,omxrmte
 
 
 %changelog
+* Sat Apr 29 2023 Xiaoya Huang <huangxiaoya@iscas.ac.cn> - 0.9.3-23
+- Fix clang build error
+
 * Sat Jul 31 2021 luweitao <luweitao2@huawei.com> - 0.9.3-22
 - fix failure by upgrade to GCC-10
 
